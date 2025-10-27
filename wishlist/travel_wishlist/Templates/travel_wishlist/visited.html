@@ -1,0 +1,15 @@
+<hi>Places you have visited</hi>
+
+{% if visited %}
+
+    <ul>
+    {% for place in visited %}
+        <li>{{ place.name }}</li>
+    {% endfor %}
+    </ul>
+
+{% else %}
+
+    <p>You haven't visited any places yet.</p>
+    
+{% endif %}
