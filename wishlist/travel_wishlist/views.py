@@ -24,3 +24,8 @@ def place_list(request):
     places = Place.objects.filter(visited=False).order_by('name')
     new_place_form = NewPlaceForm()
     return render(request, 'travel_wishlist/wishlist.html', {'places': places})
+
+# Create a view to show the list of visited places
+def places_visited(request):
+    visited = Place.objects.filter(visited=True).order_by('name')
+    return render(request, 'travel_wishlist/visited.html', {'visited': places_visited})
