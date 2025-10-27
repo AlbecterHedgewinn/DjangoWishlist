@@ -29,3 +29,11 @@ def place_list(request):
 def places_visited(request):
     visited = Place.objects.filter(visited=True).order_by('name')
     return render(request, 'travel_wishlist/visited.html', {'visited': places_visited})
+
+# Create a view to mark a place as visited
+def place_was_visited(request, place_pk):
+    if request.method == 'POST':
+        place = Place.objects.get(pk=place_pk)
+        place.visited = True
+        place.save()
+    return redirect('place_list')
