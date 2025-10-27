@@ -1,4 +1,4 @@
-from Django import forms
+from django import forms
 from .models import Place
 
 # Create a form for the Place model
