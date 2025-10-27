@@ -4,6 +4,8 @@ from . import views
 
 # we want the root URL of this app to go to the place_list view
 # this will be how we see the list of places in the browser
+# also add a url for places the user has visited
 urlPatterns = [
     path('', views.place_list, name='place_list'),
+    path('visited/', views.places_visited, name='places_visited'),
 ]
