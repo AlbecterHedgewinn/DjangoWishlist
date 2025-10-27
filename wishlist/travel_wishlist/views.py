@@ -4,6 +4,7 @@ from .models import Place
 # Create your views here.
 
 # Create a view to show the list of places
+# filter only unvisited places and order them by name
 def place_list(request):
-    places = Place.objects.all()
+    places = Place.objects.filter(visited=False).order_by('name')
     return render(request, 'travel_wishlist/wishlist.html', {'places': places})
