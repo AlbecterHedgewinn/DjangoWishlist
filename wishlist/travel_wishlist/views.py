@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Place
 from .forms import NewPlaceForm
 
@@ -33,7 +33,12 @@ def places_visited(request):
 # Create a view to mark a place as visited
 def place_was_visited(request, place_pk):
     if request.method == 'POST':
-        place = Place.objects.get(pk=place_pk)
+        place = get_object_or_404(Place, pk=place_pk)
         place.visited = True
         place.save()
     return redirect('place_list')
+
+# Notice place_pk argument - Django provides this argument when the
+# URL is resolved. If the request is to /place/10/was_visited, then place_pk will be 10
+# If this is a POST request, find the place with this pk, change visited to True, and save
+# Redirect to place_list to show the wishlist
