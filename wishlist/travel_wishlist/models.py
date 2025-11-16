@@ -14,7 +14,8 @@ class Place(models.Model):
 
     def __str__(self):
         photo_str = self.photo.url if self.photo else "No Photo"
-        return f'{self.name}, visited? {self.visited} on {self.date_visited}. Photo: {photo_str}'
+        note_str = self.notes[100:] # truncate notes to first 100 characters
+        return f'{self.name}, visited? {self.visited} on {self.date_visited}. Notes: {note_str}. Photo: {photo_str}'
         # this will show the name of the place and whether or not it has been visited
         # visited? True or False
         # it will also show the date visited and the photo URL if available
