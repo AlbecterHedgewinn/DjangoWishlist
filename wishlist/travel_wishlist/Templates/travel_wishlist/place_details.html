@@ -1,6 +1,16 @@
 {% extends travel_wishlist/'base.html' %}
 {% block content %}
 
-{{ place.name }}
+<h2>{{ place.name }}</h2>
+
+{% place.visited %}
+    <p>You have visited {{ place.name }}</p>
+{% else %}
+    <p>You have not visited {{ place.name }} yet.</p>
+
+    <form action="{% url 'place_was_visited' place.pk %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="visited">Visited!</button>
+{% endif %}
 
 {% endblock %}
