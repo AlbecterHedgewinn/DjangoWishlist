@@ -4,6 +4,11 @@ from .forms import NewPlaceForm
 from django.contrib.auth.decorators import login_required
 # decorator to require login for certain views
 # if a login page route is not set up, the server will give a 404 error and provide a redirect link to the login page
+from django.http import HttpResponseForbidden
+# This prevents unauthorized access to certain views
+# if multiple users use the service, this will prevent one user from accessing another user's data
+
+
 
 # Create your views here.
 
@@ -42,8 +47,11 @@ def places_visited(request):
 def place_was_visited(request, place_pk):
     if request.method == 'POST':
         place = get_object_or_404(Place, pk=place_pk)
-        place.visited = True
-        place.save()
+        if place.user == request.user:   # ensure the place belongs to the logged-in user
+            place.visited = True
+            place.save()
+        else:
+            return HttpResponseForbidden()  # return a 403 Forbidden response if the user is not authorized
     return redirect('place_list')
 
 # Notice place_pk argument - Django provides this argument when the
