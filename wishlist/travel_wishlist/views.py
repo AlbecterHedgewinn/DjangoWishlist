@@ -19,15 +19,17 @@ def place_list(request):
     # then redirect to the place_list view to show the updated list
     if request.method == 'POST':
         form = NewPlaceForm(request.POST)
-        place = form.save()
+        place = form.save(commit=False) # create a Place object but don't save to the database yet
+        place.user = request.user       # set the user to the currently logged-in user
         if form.is_valid():
-            form.save()
+            place.save()
             return redirect('place_list')
 
     # if not a POST request, just show the list of unvisited places
-    places = Place.objects.filter(visited=False).order_by('name')
+    places = Place.objects.filter(user=request.user).filter(visited=False).order_by('name')
     new_place_form = NewPlaceForm()
     return render(request, 'travel_wishlist/wishlist.html', {'places': places})
+    # request_user is provided by Django and represents the currently logged-in user
 
 # Create a view to show the list of visited places
 @login_required
