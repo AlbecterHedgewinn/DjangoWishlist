@@ -3,6 +3,7 @@ from .models import Place
 from .forms import NewPlaceForm
 from django.contrib.auth.decorators import login_required
 # decorator to require login for certain views
+# if a login page route is not set up, the server will give a 404 error and provide a redirect link to the login page
 
 # Create your views here.
 
