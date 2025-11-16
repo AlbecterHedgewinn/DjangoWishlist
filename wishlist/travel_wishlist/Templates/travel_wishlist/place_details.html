@@ -4,8 +4,47 @@
 
 <h2>{{ place.name }}</h2>
 
-{% place.visited %}
+{% if place.visited %}
+
+
     <p>You have visited {{ place.name }}</p>
+
+    <h3>Your notes:</h3>
+
+    <p>{{ place.notes|default:"No Notes." }}</p>
+
+    <h3>Date visited:</h3>
+
+    <p>{{ date.visited|default:"Date visited not set." }} </p>
+
+    <h3>Photo:</h3>
+
+
+
+    {% if place.photo %}
+        <img src="{{ place.photo.url }}">
+    {% else %}
+        <p>No photo available.</p>
+    {% endif %}
+
+
+
+    {% if review_form %}
+    <div class="messages">  
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+
+    <form action="{% url 'place_details' place.pk %}" method="POST" enctype ="multipart/form-data">
+        {% csrf_token %}
+        {{ review_form.as_p }}
+        <button type="submit" >Save Review?</button>
+    </form>
+
+
 {% else %}
     <p>You have not visited {{ place.name }} yet.</p>
 
