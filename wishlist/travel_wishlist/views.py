@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Place
 from .forms import NewPlaceForm
+from django.contrib.auth.decorators import login_required
+# decorator to require login for certain views
 
 # Create your views here.
 
 # Create a view to show the list of places
 # filter only unvisited places and order them by name
+@login_required     # uses the login_required decorator from above
 def place_list(request):
 
     # Handle the form submission
@@ -26,11 +29,13 @@ def place_list(request):
     return render(request, 'travel_wishlist/wishlist.html', {'places': places})
 
 # Create a view to show the list of visited places
+@login_required
 def places_visited(request):
     visited = Place.objects.filter(visited=True).order_by('name')
     return render(request, 'travel_wishlist/visited.html', {'visited': places_visited})
 
 # Create a view to mark a place as visited
+@login_required
 def place_was_visited(request, place_pk):
     if request.method == 'POST':
         place = get_object_or_404(Place, pk=place_pk)
