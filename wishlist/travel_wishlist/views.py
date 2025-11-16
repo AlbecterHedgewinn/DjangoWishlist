@@ -50,3 +50,8 @@ def place_was_visited(request, place_pk):
 # URL is resolved. If the request is to /place/10/was_visited, then place_pk will be 10
 # If this is a POST request, find the place with this pk, change visited to True, and save
 # Redirect to place_list to show the wishlist
+
+@login_required
+def place_details(request, place_pk):
+    place = get_object_or_404(Place, pk=place_pk)
+    return render(request, 'travel_wishlist/place_details.html', {'place': place})
