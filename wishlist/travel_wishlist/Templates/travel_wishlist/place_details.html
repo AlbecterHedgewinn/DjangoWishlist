@@ -13,4 +13,9 @@
         <button type="submit" class="visited">Visited!</button>
 {% endif %}
 
+<form action="{% url 'delete_place' place.pk %}" method="POST">
+    {% csrf_token %}
+    <button type="submit" class="delete">Delete</button>
+</form>
+
 {% endblock %}
