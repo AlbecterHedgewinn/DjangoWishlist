@@ -27,3 +27,29 @@ class TestWishList(TestCase):
         self.assertContains(response, 'New York')
         self.assertNotContains(response, 'San Francisco')
         self.assertNotContains(response, 'Moab')
+
+
+#Write a test that checks that the visited page has a "You have not visited any places yet." message
+class TestNotVisited(TestCase):
+    def test_view_visited_places_shows_no_visited_message_for_empty_db(self):
+        response = self.client.get(reverse('places_visited'))
+        self.assertTemplateUsed(response, 'travel_wishlist/visited.html')
+        self.assertContains(response, 'You have not visited any places yet.')
+
+
+# Test visited places – and only visited places - are displayed
+# create a new test class
+# • Load the test_places.json fixtures file
+# • Test the visited places (Moab, San Francisco) are displayed, and the not visited places (Tokyo, New York) are not
+class TestVisitedPlaces(TestCase):
+
+    fixtures = ['test_places']
+
+    def test_view_visited_places_contains_only_visited_places(self):
+        response = self.client.get(reverse('places_visited'))
+        self.assertTemplateUsed(response, 'travel_wishlist/visited.html')
+
+        self.assertContains(response, 'Moab')
+        self.assertContains(response, 'San Francisco')
+        self.assertNotContains(response, 'Tokyo')
+        self.assertNotContains(response, 'New York')
