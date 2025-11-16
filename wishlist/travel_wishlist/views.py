@@ -9,6 +9,7 @@ from django.http import HttpResponseForbidden
 # if multiple users use the service, this will prevent one user from accessing another user's data
 from django.contrib import messages
 # This allows us to send one-time messages to the user, such as success or error messages
+from .forms import TripReviewForm
 
 
 
@@ -83,7 +84,7 @@ def place_details(request, place_pk):
     # if place is visited, show the TripReviewForm. if not, no form
     else:
         if place.visited:
-            form = TripReviewForm(instance=place)
+            review_form = TripReviewForm(instance=place)
             return render(request, 'travel_wishlist/place_details.html', {'place': place, 'review_form': review_form})
         else:
             return render(request, 'travel_wishlist/place_details.html', {'place': place})
