@@ -19,3 +19,8 @@ label {
 a.nav_link {
     padding-right: 10px;
 }
+
+#add-new-place {
+    background-color: rgb(181, 245, 224);
+    border: olive;
+}
